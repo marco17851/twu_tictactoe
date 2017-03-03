@@ -1,25 +1,28 @@
+import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 /**
  * Created by MarcoBarragan on 3/3/17.
  */
 public class TicTacToeTest {
+
+    private PrintStream out;
+    private TicTacToe ttt;
+
+    @Before
+    public void setUp() {
+        out = mock(PrintStream.class);
+        ttt = new TicTacToe(out);
+    }
     
     @Test
     public void shouldDrawTheBoardOnStart() {
-        PrintStream out = mock(PrintStream.class);
-        TicTacToe ttt = new TicTacToe(out);
-
         ttt.printBoard();
 
         verify(out).println("1|2|3\n" +
@@ -29,14 +32,15 @@ public class TicTacToeTest {
                 "7|8|9");
     }
 
-//    @Test
-//    public void shouldRedrawTheBoardAfterEveryMove() {
-//        PrintStream out = mock(PrintStream.class);
-//        TicTacToe ttt = new TicTacToe(out);
-//
-//        ttt.startGame();
-//
-//
-//    }
+    @Test
+    public void shouldRedrawTheBoardAfterEveryMove() {
+        ttt.placeMove("X", 1);
+        ttt.printBoard();
+        verify(out).println("X|2|3\n" +
+                "-----\n" +
+                "4|5|6\n" +
+                "-----\n" +
+                "7|8|9");
+    }
 
 }
